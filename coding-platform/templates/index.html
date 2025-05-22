@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Code Runner & AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- ACE Editor Library (CDN) - Load these BEFORE your custom JS that uses ACE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.6/ace.js" integrity="sha512-8Hv34yRXFPaZDus3QkQqkS0I6f+3FPqIVqj9p/NZ4kXQGZudomjLSU9cZUKgX/oQ8hF5hGTUf5LKM732kXy0cg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.6/ext-language_tools.js" integrity="sha512-6kjqL7S8q3f+k/3W+A790B70QKhF7t9n2fW9zQNY1P53kM38fzj6XU/o/5e+hSJN+b+V70bmS/XgXw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <h1>Code Runner & AI Assistant</h1>
+
+    <div class="editor-container">
+        <div class="controls">
+            <label for="language-select">Language:</label>
+            <select id="language-select" title="Select programming language">
+                <option value="python" selected>Python</option>
+                <option value="cpp">C++</option>
+            </select>
+            <button id="run-button" title="Execute the code in the editor">Run Code</button>
+            <!-- Optimize button placed using margin-left: auto in CSS -->
+            <button id="optimize-button" title="Use AI to optimize the code in the editor">Optimize Code (AI)</button>
+        </div>
+        <!-- This div is the target for the ACE Editor -->
+        <div id="editor">// Start coding here...</div>
+    </div>
+
+    <div class="sliding-panel" id="bottom-panel">
+        <div class="panel-handle" id="panel-handle" title="Toggle Output & Tools Panel">Output & Tools</div>
+        <div class="panel-content">
+            <div class="tabs">
+                <!-- Ensure data-tab matches the ID of the corresponding content div -->
+                <button class="tab-button active" data-tab="output-tab" title="Show code output and errors">Output</button>
+                <button class="tab-button" data-tab="metrics-tab" title="Show execution metrics">Metrics</button>
+                <button class="tab-button" data-tab="gemini-tab" title="Use AI to generate code">AI Coder</button>
+            </div>
+            <!-- Wrapper div handles scrolling for the content below the tabs -->
+            <div class="tab-content-wrapper">
+                <div id="output-tab" class="tab-content active">
+                     <h2>Output / Errors</h2>
+                     <pre id="output-area" class="loading">Click "Run Code" to see the results.</pre>
+                </div>
+
+                <div id="metrics-tab" class="tab-content">
+                     <h2>Execution Metrics</h2>
+                     <div id="metrics-area">
+                         <ul>
+                             <li>Run Time: <span id="metric-runtime">N/A</span></li>
+                             <li>CPU Used: <span id="metric-cpu">N/A</span></li>
+                             <li>Peak Memory: <span id="metric-mem">N/A</span></li>
+                             <!-- Complexity placeholders - requires advanced analysis -->
+                             <li>Time Complexity: <span id="metric-time-comp">N/A</span></li>
+                             <li>Space Complexity: <span id="metric-space-comp">N/A</span></li>
+                         </ul>
+                     </div>
+                </div>
+
+                <div id="gemini-tab" class="tab-content">
+                     <h2>AI Code Generation</h2>
+                     <textarea id="gemini-prompt" placeholder="Enter your prompt here (e.g., 'write a python function to sort a list')..." rows="3" title="Describe the code you want the AI to generate"></textarea>
+                     <button id="gemini-generate-button" title="Ask AI to generate code based on the prompt">Generate Code</button>
+                     <h3>Generated Code:</h3>
+                     <pre id="gemini-output-area">// AI-generated code will appear here...</pre>
+                </div>
+            </div> <!-- end tab-content-wrapper -->
+        </div> <!-- end panel-content -->
+    </div> <!-- end sliding-panel -->
+
+    <!-- Load custom JS files AFTER the DOM is structured and dependencies (ACE) are loaded -->
+    <!-- Order matters: editor.js initializes 'editor', ui.js initializes 'switchTab', main.js uses both -->
+    <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

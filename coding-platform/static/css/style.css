@@ -1,0 +1,337 @@
+/* coding-platform/static/css/style.css */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f0f2f5;
+    color: #1c1e21;
+    font-size: 14px;
+    line-height: 1.4;
+    overflow: hidden; /* Prevent body scrollbars */
+}
+
+h1 {
+    text-align: center;
+    background-color: #4267b2; /* Facebook blue */
+    color: white;
+    padding: 12px 0;
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.editor-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    overflow: hidden; /* Container handles overflow */
+    min-height: 150px; /* Ensure editor container is visible */
+}
+
+.controls {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.controls label {
+    font-weight: 600;
+    margin-right: -5px; /* Tighten space after label */
+}
+
+/* Base styles for buttons and select */
+.controls select, .controls button {
+    padding: 8px 14px;
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #f5f6f7;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.1s ease;
+    white-space: nowrap; /* Prevent buttons text wrapping */
+}
+.controls select:focus, .controls button:focus {
+    outline: none;
+    border-color: #4267b2;
+    box-shadow: 0 0 0 2px rgba(66, 103, 178, 0.3);
+}
+.controls select:hover, .controls button:hover {
+     border-color: #bec3c9;
+     background-color: #ebedf0;
+}
+.controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: #e4e6eb;
+}
+
+
+/* Specific button styles */
+#run-button {
+    background-color: #42b72a; /* Green */
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+#run-button:not(:disabled):hover {
+    background-color: #36a420;
+    border-color: transparent;
+}
+#run-button:not(:disabled):active {
+    background-color: #2b8a18;
+}
+
+#optimize-button {
+     background-color: #e4e6eb; /* Light gray */
+     color: #050505;
+     border-color: #ced0d4;
+     margin-left: auto; /* Push to the right */
+}
+#optimize-button:not(:disabled):hover {
+     background-color: #dcdfe4;
+}
+
+
+#editor {
+    flex-grow: 1;
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+    min-height: 100px; /* Ensure minimum visible height even if container shrinks */
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+    width: 100%; /* Ensure it takes full width */
+}
+
+/* --- Sliding Panel --- */
+.sliding-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border-top: 1px solid #dddfe2;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.08);
+    height: 45px;
+    overflow: hidden;
+    transition: height 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.sliding-panel.open {
+    height: 35vh; /* Use viewport height percentage */
+    min-height: 250px;
+    max-height: 60vh; /* Limit growth */
+}
+
+.panel-handle {
+    background-color: #f5f6f7;
+    border-bottom: 1px solid #dddfe2;
+    padding: 12px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    user-select: none;
+    flex-shrink: 0;
+    color: #4b4f56;
+}
+.panel-handle:hover {
+    background-color: #ebedf0;
+}
+
+.panel-content {
+    padding: 0; /* Padding applied by tabs/content */
+    overflow: hidden; /* Content within handles its own scroll */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Important for flex children scrolling */
+}
+
+/* --- Tabs --- */
+.tabs {
+    border-bottom: 1px solid #dddfe2;
+    margin-bottom: 0; /* Removed margin */
+    flex-shrink: 0;
+    display: flex;
+    background-color: #ffffff;
+    padding: 0 15px; /* Padding for tab buttons */
+}
+
+.tab-button {
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-size: 0.95em;
+    margin-right: 5px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    color: #606770;
+    font-weight: 600;
+    margin-bottom: -1px; /* Overlap border-bottom */
+    white-space: nowrap;
+}
+.tab-button:hover {
+    background-color: #f5f6f7;
+    border-bottom-color: #ebedf0;
+}
+.tab-button.active {
+    border-bottom-color: #1877f2; /* Active blue */
+    color: #1877f2;
+    font-weight: 700;
+}
+.tab-button:focus {
+     outline: none;
+     background-color: #f0f2f5; /* Subtle focus indicator */
+}
+
+
+/* --- Tab Content Area --- */
+.tab-content-wrapper {
+    flex-grow: 1;
+    overflow-y: auto; /* Main scroll area for tab content */
+    padding: 15px;
+    min-height: 0; /* Allow shrinking */
+}
+
+.tab-content {
+    display: none; /* Hide inactive tabs */
+    /* Removed flex grow, height, overflow from here */
+}
+.tab-content.active {
+    display: block; /* Show active tab */
+}
+
+/* --- Output/Metrics/Gemini Areas --- */
+.tab-content h2 {
+     font-size: 1.1em;
+     color: #1c1e21;
+     margin-bottom: 10px;
+     margin-top: 0; /* Remove top margin */
+     font-weight: 600;
+}
+
+#output-area, #metrics-area pre, #gemini-output-area {
+    background-color: #f5f6f7;
+    border: 1px solid #e4e6eb;
+    border-radius: 4px;
+    padding: 10px 12px;
+    min-height: 60px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: "Fira Code", "Consolas", "Monaco", "Menlo", monospace;
+    font-size: 0.9em;
+    color: #050505;
+    margin-bottom: 10px; /* Space at bottom */
+    max-height: 40vh; /* Limit height of pre blocks */
+    overflow-y: auto; /* Scroll within pre block if needed */
+}
+
+#metrics-area ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+    font-size: 0.95em;
+}
+#metrics-area li {
+    margin-bottom: 8px;
+    color: #606770;
+}
+#metrics-area li span {
+    font-weight: 600;
+    font-family: "Fira Code", "Consolas", "Monaco", "Menlo", monospace;
+    margin-left: 8px;
+    color: #1c1e21;
+    background-color: #e7f3ff; /* Light blue background for values */
+    padding: 2px 5px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+#gemini-prompt {
+    display: block; /* Take full width */
+    width: calc(100% - 24px); /* Adjust for padding */
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border: 1px solid #ccd0d5;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95em;
+    resize: vertical;
+    min-height: 60px;
+}
+#gemini-tab h3 {
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 1em;
+    color: #4b4f56;
+    font-weight: 600;
+}
+#gemini-tab button { /* Style button inside tab */
+     margin-bottom: 15px; /* Space before h3 */
+}
+
+
+/* --- Utility Classes --- */
+pre.error {
+    color: #fa383e; /* Red for errors */
+    background-color: #ffebee; /* Light pink background */
+    border-color: #ffcdd2;
+}
+pre.loading, span.loading {
+    color: #606770;
+    font-style: italic;
+}
+span.loading {
+     background-color: #f0f2f5;
+     padding: 2px 5px;
+     border-radius: 3px;
+}
+
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    body {
+        font-size: 13px;
+    }
+    .editor-container {
+        padding: 10px;
+        min-height: 100px;
+    }
+    h1 {
+        font-size: 1.3em;
+        padding: 10px 0;
+    }
+    .controls {
+        gap: 10px;
+    }
+    .controls select, .controls button {
+        padding: 7px 10px;
+        font-size: 0.9em;
+    }
+    .sliding-panel.open {
+        height: 50vh; /* More height on mobile */
+    }
+     .tab-button {
+        padding: 10px 12px;
+        font-size: 0.9em;
+     }
+     .tabs {
+         padding: 0 10px;
+     }
+     .tab-content-wrapper {
+         padding: 10px;
+     }
+}
